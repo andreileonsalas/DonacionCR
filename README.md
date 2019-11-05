@@ -36,19 +36,23 @@ Drive es una herramienta que se utiliza para almacenar y compartir información.
 
 ## [NetBeans]( https://netbeans.org/ )
 
+NetBeans [5] es descrito como un ambiente integrado de desarrollo para aplicaciones en Windows, Mac, Linux y Solaris. Este simplifica el desarrollo web, para empresas y de escritorio, junto con otras aplicaciones que usan Java y HTML 5 como plataforma.  Además NetBeans tiene la facilidad de que se puede trabajar  y hacer updates a GitHub lo que permite que el código sea compartido por diferentes miembros del equipo. Sin que estos necesiten estar presentes.
 
+En el caso del desarrollo del presente proyecto, este se utiliza debido a la facilidad que ofrece este entorno de desarrollo, tanto para aplicaciones de escritorio, como la conectividad que tiene con GitHub. Características importantes para el desarrollo del mismo ya que todo el desarrollo de la interfaz de la aplicación, es hecho directamente en el IDE. Para finalizar, este entorno de desarrollo permite trabajar tanto la parte gráfica como la parte programada, aspecto a destacar ya que como se implementa un modelo Vista-Controlador, es preferible realizar el desarrollo de todo este dentro del mismo IDE.
 
 ## [GitHub]( https://github.com/ )
 
+GitHub es un sistema de control de versiones que se encuentra en la red[6]. Sobre este sistema se monta una "red social" en la que se puede compartir código y trabajar sobre el mismo entre diferentes personas. Además permite a los usuarios del mismo hacer updates/upgrades a los proyectos que se encuentren en la plataforma. GitHub trabaja mediante git, obteniendo las funciones principales del mismo, con lo que se puede llamar a este un Sistema de Control de Versiones [6]. 
 
-
-## [MongoDB]( https://www.mongodb.com/ )
-
-
+En el desarrollo del proyecto actual, es un aspecto a destacar debido a que permite que los desarrolladores del mismo, compartan el mismo código. Además tiene conectividad con NetBeans, lo que facilita el desarrollo y control del avance del proyecto. Otra de las ventajas que trae GitHub respecto al control de versiones es que permite hacer actualizaciones del código, y en caso de haber conflictos permite a la persona que los encuentra, que los solucione antes de hacer el update. La última ventaja de la que se saca partido, es el que se encuentre en la nube y sea accesible desde diferentes puntos, este aspecto simplifica el hecho de tener que reunirse en equipo para hacer una actualización.
 
 # Estructuras de Datos y Funciones Usadas
 
 ## Diagrama E-R 
+
+- Atributo 
+
+  Este se puede describir como una característica de una entidad.
 
 - Atributo Compuesto
 
@@ -62,29 +66,16 @@ Drive es una herramienta que se utiliza para almacenar y compartir información.
 
   Son los objetos con menor significado en una instancia. Estos tienen una existencia independiente, incluso se diferencian entre entidades del mismo tipo.
 
-## Diagrama de Clases
-
-- Herencia
-
-  En el esquema las clases inferiores, adquieren los atributos de la clase principal. Se utiliza cuando varias clases necesitan los mismos atributos.
-
-- Clase
-
-  Las clases son la forma de representar objetos y sus cualidades, y funciones. Sobre ellas se especifica cual es el identificador y cuáles atributos son públicos, privados o protegidos.
-
-- Atributos
-
-  Los atributos son las cualidades que definen un objeto, estos pueden ser públicos, privados o protegidos.
-
-- Métodos
-
-  Los métodos son las acciones que se pueden realizar sobre los objetos, estas están definidas para cada objeto y se pueden diseñar para ser públicas, privadas o protegidas.
-
 ## Base de datos
 
 En la base de datos se utilizan las siguientes tablas. En esta sección se explica el porqué de su uso y su necesidad dentro de la base de datos.
 
-- Donador(Ejemplo): Esta se utiliza debido a la necesidad de tener dentro de la base de datos una estructura de fácil acceso que pueda ser usada para mantener la principal información del donante.
+- Donador: Esta se utiliza debido a la necesidad de tener dentro de la base de datos una estructura de fácil acceso que pueda ser usada para mantener la principal información del donante.
+- Dirección de un donador: Esta se utiliza ante la necesidad de clasificar a los individuos(donadores) por el lugar de procedencia. De igual manera se hace debido a que cuando se hacen consultas sobre el donador, no siempre se necesita saber esta información.
+- Donación: En la base de datos se registra una entrada en este campo cada vez que se realiza una donación de sangre de algún donador. Esta tabla permite tener un control de lo que ocurre dentro de la base de datos cuando se acceda como un administrador de la misma.
+- Registro de medicamentos: En esta sección de la base de datos se lleva un registro de los medicamentos que consume cada persona, incluye los principales detalles de consumo del mismo por parte de la persona.
+- Registro de enfermedades: Aquí se almacena la información correspondiente a las enfermedades que han sufrido los donadores, en que año tuvieron la misma y en que medida se presentó en dicho caso. Este es necesario para tener un control de las personas que llegan a donar y tienen en su historial alguna enfermedad.
+- **Banco de sangre:** Este campo se encarga de mantener la información actualizada de la cantidad de litros totales con los que cuenta el hospital.
 
 ## Aplicación Java
 
