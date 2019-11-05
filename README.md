@@ -1,7 +1,5 @@
 # Donación CR
 
-# Introducción
-
 Este trabajo se realiza con la intención de aplicar nuevos conocimientos y fortalecer los ya aplicados anteriormente durante el curso. En él se genera una propuesta a la aplicación requerida para tener un control de las donaciones de sangre que se hacen en el Hospital San Juan de Dios[1].
 
 La aplicación que se genera permite al usuario varias acciones entre las cuales destacan, insertar un donante y  visualizar listas basándose en diferentes métodos de clasificación de información[1].  La aplicación como tal, es desarrollada en Java; esta junto con las bases de datos PostgreSQL y MongoDB, contienen el sistema completo que hace funcionar de forma adecuada la propuesta. 
