@@ -7,7 +7,7 @@ package javahellocollections;
 
 import JavaMVCControllers.*;
 import JavaMVCModels.DonacionCRModel;
-import JavaMVCViews.DonacionCRView;
+import JavaMVCViews.*;
 
 /**
  *
@@ -21,6 +21,7 @@ public class JavaCollections {
     public static void main(String[] args) {
         // TODO code application logic here
         DonacionCRView view = new DonacionCRView();
+        //IniciateSession sesion = new IniciateSession(view);
         DonacionCRModel model = new DonacionCRModel();
         DonacionCRController controller = new DonacionCRController();
         // Start the application
