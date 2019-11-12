@@ -88,7 +88,7 @@ public class DonacionCRModel {
             }   
             while(table.getColumnCount() > 0)
             {
-                ((DefaultTableModel) table.getModel()).setColumnCount(0);
+                ((DefaultTableModel) table.getModel()).setColumnCount(0);//remove all columns
             }   
             int columns = rs.getMetaData().getColumnCount();
             ResultSetMetaData metaData = rs.getMetaData();
