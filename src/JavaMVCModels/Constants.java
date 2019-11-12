@@ -10,8 +10,8 @@ package JavaMVCModels;
  * @author Andrei
  */
 public class Constants {
-    public static String sqlurl = "";
-    public static String sqluser = "";
-    public static String sqlpass = "";
+    public static String sqlurl = "jdbc:postgresql://localhost:5433/DonacionCR";
+    public static String sqluser = "postgres";
+    public static String sqlpass = "admin";
     
 }
