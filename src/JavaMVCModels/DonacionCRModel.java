@@ -8,6 +8,7 @@ package JavaMVCModels;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JTable;
@@ -84,7 +85,17 @@ public class DonacionCRModel {
             while(table.getRowCount() > 0)
             {
                 ((DefaultTableModel) table.getModel()).removeRow(0);
-            }   int columns = rs.getMetaData().getColumnCount();
+            }   
+            while(table.getColumnCount() > 0)
+            {
+                ((DefaultTableModel) table.getModel()).setColumnCount(0);
+            }   
+            int columns = rs.getMetaData().getColumnCount();
+            ResultSetMetaData metaData = rs.getMetaData();
+            //Get all column names from meta data and add columns to table model
+            for (int columnIndex = 1; columnIndex <= columns; columnIndex++){
+                ((DefaultTableModel) table.getModel()).addColumn(metaData.getColumnLabel(columnIndex));
+            }
             while (rs.next()) {
                 Object[] row = new Object[columns];
                 for (int i = 1; i <= columns; i++)

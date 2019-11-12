@@ -37,8 +37,9 @@ public class DonacionCRController {
         this.model = new DonacionCRModel(); //Crea el modelo, por decirlo asi, de donde se consiguen los datos
         this.view.setController(this); //hace que este view se le asigne al controlador (poner todo debajo del controlador)
         this.view.setVisible(true); //Lo hace visible
-        model.FillTable(mostrarqueries.jTable1, SQL); //Recibe un jtable, y lo rellena con el query que uno quiera
         this.mostrarqueries.setVisible(true); //Muestra el queri
+        model.FillTable(mostrarqueries.jTable1, SQL); //Recibe un jtable, y lo rellena con el query que uno quiera
+        
         //model.connect();        
     }
     
