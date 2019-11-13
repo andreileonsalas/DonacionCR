@@ -124,6 +124,4 @@ public class DonacionCRModel {
             Logger.getLogger(DonacionCRModel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-    
 }

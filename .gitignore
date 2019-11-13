@@ -1,6 +1,17 @@
 /target/
 /dist/
+# NetBeans specific #
+nbproject/private/
+build/
+nbbuild/
+dist/
+nbdist/
+nbactions.xml
+
+# Class Files #
 *.class
+
+# Package Files #
 *.jar
 *.war
 *.ear
