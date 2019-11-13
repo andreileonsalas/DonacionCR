@@ -5,12 +5,16 @@
  */
 package JavaMVCControllers;
 
+
 import JavaMVCViews.*;
 import JavaMVCModels.*;
+import com.toedter.calendar.JDateChooser;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -89,7 +93,20 @@ public class DonacionCRController {
     }
 
     public void LitrosporFechaNacimiento() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        String query;
+        String fecha;
+        JDateChooser jd = new JDateChooser();
+        String message ="Choose start date:\n";
+        Object[] params = {message,jd};
+        JOptionPane.showConfirmDialog(null,params,"Start date", JOptionPane.PLAIN_MESSAGE);
+        String s="";
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        s=sdf.format(((JDateChooser)params[1]).getDate());//Casting params[1] makes me able to get its information
+        fecha = "05/09/2012";
+        query = "SELECT num_donacion, cedula_donante, cant_donada, fecha_donacion	FROM public.\"Registro_Donacion\"	WHERE fecha_donacion='"+s+"';";
+        this.model.FillTable(mostrarqueries.jTable1, query);
+        this.view.setVisible(false);
+        this.mostrarqueries.setVisible(true);
     }
 
     public void ListarTotalSangreporTipodeSangre() {
