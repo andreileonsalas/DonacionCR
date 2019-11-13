@@ -9,6 +9,7 @@ package JavaMVCControllers;
 import JavaMVCViews.*;
 import JavaMVCModels.*;
 import com.toedter.calendar.JDateChooser;
+import java.awt.HeadlessException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
@@ -29,6 +30,7 @@ public class DonacionCRController {
     private Mostrarqueries mostrarqueries;
     String SQL = "SELECT num_cedula, apellido_1, apellido_2, nombre, sexo, fecha_nacimiento, tipo_sangre, \"idDireccion\", \"numTelefono\", litros_donados\n" +
 "	FROM public.\"Donante\";";
+    private RegistrarDonador registrardonador;
     
     public void startApplication(DonacionCRModel model,DonacionCRView view) {
         // View the application's GUI
@@ -40,6 +42,8 @@ public class DonacionCRController {
         this.view = new DonacionCRView(); //Crea la vista, por decirlo asi, es uno por ventana
         this.mostrarqueries = new Mostrarqueries(); //Crea la vista de queries, por decirlo asi, es uno por ventana
         this.model = new DonacionCRModel(); //Crea el modelo, por decirlo asi, de donde se consiguen los datos
+        this.registrardonador = new RegistrarDonador();
+        this.registrardonador.setController(this);//le asigna el controlador a el donador
         this.view.setController(this); //hace que este view se le asigne al controlador (poner todo debajo del controlador)
         this.view.setVisible(true); //Lo hace visible
         this.mostrarqueries.setController(this);
@@ -85,7 +89,9 @@ public class DonacionCRController {
     }
 
     public void RegistrarDonador() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.registrardonador.setVisible(true);
+        this.view.setVisible(false);
     }
 
     public void InsertarDonacion() {
@@ -130,22 +136,54 @@ public class DonacionCRController {
         this.SQL =  "SELECT num_cedula, apellido_1, apellido_2, nombre, sexo, fecha_nacimiento, tipo_sangre, \"idDireccion\", \"numTelefono\", litros_donados\n" +
 "	FROM public.\"Donante\"\n" +
 "	ORDER By\n" +
-"	nombre ASC,\n" +
 "	apellido_1 ASC,\n" +
-"	apellido_2 ASC;";
+"	apellido_2 ASC,\n" +
+"	nombre ASC;";
         this.model.FillTable(this.mostrarqueries.jTable1, SQL); //Recibe un jtable, y lo rellena con el query que uno quiera
         this.mostrarqueries.setVisible(true);
         this.view.setVisible(false);
     }
 
     public void ConsultarInformacionDonador() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Long cedula = null;
+        try {
+            cedula = Long.parseLong(JOptionPane.showInputDialog(null, "Digite el numero de cedula:"));
+        } catch (HeadlessException headlessException) {
+        } catch (NumberFormatException numberFormatException) {
+            JOptionPane.showMessageDialog(null, "No digito un numero");
+            return;
+        }
+        this.SQL = "SELECT num_cedula, apellido_1, apellido_2, nombre, sexo, fecha_nacimiento, tipo_sangre, \"idDireccion\", \"numTelefono\", litros_donados\n" +
+"	FROM public.\"Donante\"\n" +
+"	WHERE num_cedula = '"+ cedula +"';";
+        
+        try {
+            this.model.FillTable(this.mostrarqueries.jTable1, SQL);
+            this.mostrarqueries.setVisible(true);
+            this.view.setVisible(false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+        
+
+        
     }
 
     public void volver() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         this.view.setVisible(true);
         this.mostrarqueries.setVisible(false);
+    }
+
+    public void ListarTotalSangreporSexo() {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    public void RegistrarDonadoralaBase() {
+        this.registrardonador.jTextField2.getText();
+        this.model.InsertarDonador(Long.valueOf(this.registrardonador.jTextField2.getText()),this.registrardonador.jTextField3.getText(),this.registrardonador.jTextField4.getText(),this.registrardonador.jTextField5.getText(),this.registrardonador.jTextField6.getText(),this.registrardonador.jTextField7.getText(),this.registrardonador.jTextField8.getText(),this.registrardonador.jTextField9.getText(),Long.valueOf(this.registrardonador.jTextField10.getText()),0);
+        this.registrardonador.setVisible(false);
+        this.view.setVisible(true);
     }
     
     

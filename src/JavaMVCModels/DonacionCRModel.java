@@ -11,6 +11,8 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -34,7 +36,7 @@ public class DonacionCRModel {
     public Connection connect() {
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection(Constants.sqlurl, Constants.sqluser, Constants.sqlpass);
+            conn = DriverManager.getConnection(Constants.sqlurllocal, Constants.sqluserlocal, Constants.sqlpasslocal);
             System.out.println("Connected to the PostgreSQL server successfully.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -108,8 +110,20 @@ public class DonacionCRModel {
     }
     catch(SQLException e)
     {
+        throw new RuntimeException(e);
     }
 }
+
+    public void InsertarDonador(long num_cedula,String apellido_1,String apellido_2,String nombre,String sexo,String fecha_nacimiento,String tipo_sangre,String idDireccion,long numTelefono, long litros_donados) {
+        try {
+            String sql = "INSERT INTO public.\"Donante\"(num_cedula, apellido_1, apellido_2, nombre, sexo, fecha_nacimiento, tipo_sangre, \"idDireccion\", \"numTelefono\", litros_donados)	VALUES (" + num_cedula + "," + apellido_1 + "," + apellido_2 + "," + nombre + "," + sexo + "," + fecha_nacimiento + "," + tipo_sangre + "," + idDireccion + "," + numTelefono + "," + litros_donados + ""+");";
+            Connection conn = connect();
+            Statement stmt = conn.createStatement();
+            stmt.execute(sql);
+        } catch (SQLException ex) {
+            Logger.getLogger(DonacionCRModel.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
     
     
 }
