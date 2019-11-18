@@ -5,6 +5,8 @@
  */
 package JavaMVCModels;
 
+import JavaMVCViews.*;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -14,6 +16,8 @@ import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -36,7 +40,7 @@ public class DonacionCRModel {
     public Connection connect() {
         Connection conn = null;
         try {
-            conn = DriverManager.getConnection(Constants.sqlurllocal, Constants.sqluserlocal, Constants.sqlpasslocal);
+            conn = DriverManager.getConnection(Constants.sqlurl, Constants.sqluser, Constants.sqlpass);
             System.out.println("Connected to the PostgreSQL server successfully.");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
@@ -112,11 +116,26 @@ public class DonacionCRModel {
     {
         throw new RuntimeException(e);
     }
+    
 }
 
-    public void InsertarDonador(long num_cedula,String apellido_1,String apellido_2,String nombre,String sexo,String fecha_nacimiento,String tipo_sangre,String idDireccion,long numTelefono, long litros_donados) {
+    /*
+    agregar el campo de la provinicia
+    */
+    public void InsertarDonador(long num_cedula,String apellido_1,String apellido_2,String nombre,String sexo,String fecha_nacimiento,String tipo_sangre,long numTelefono, long litros_donados, int provincia, String dir_exacta) {
         try {
-            String sql = "INSERT INTO public.\"Donante\"(num_cedula, apellido_1, apellido_2, nombre, sexo, fecha_nacimiento, tipo_sangre, \"idDireccion\", \"numTelefono\", litros_donados)	VALUES (" + num_cedula + "," + apellido_1 + "," + apellido_2 + "," + nombre + "," + sexo + "," + fecha_nacimiento + "," + tipo_sangre + "," + idDireccion + "," + numTelefono + "," + litros_donados + ""+");";
+            String sql = "INSERT INTO public.\"Donante\" (num_cedula, apellido_1, apellido_2, nombre, sexo, fecha_nacimiento, tipo_sangre, \"numTelefono\", litros_donados, provincia, dir_exacta)	VALUES (" 
+                    + "'" +  num_cedula + "'" +  "," 
+                    + "'" + apellido_1 + "'" + "," 
+                    + "'" + apellido_2 + "'" + "," 
+                    + "'" + nombre + "'" + ","
+                    + "'" + sexo + "'" + "," 
+                    + "'" + fecha_nacimiento + "'" + "," 
+                    + "'" + tipo_sangre + "'" + "," 
+                    + numTelefono + "," 
+                    + litros_donados + "," 
+                    + provincia + "," 
+                    + "'" + dir_exacta+ "'" + ""+");";
             Connection conn = connect();
             Statement stmt = conn.createStatement();
             stmt.execute(sql);
@@ -124,4 +143,156 @@ public class DonacionCRModel {
             Logger.getLogger(DonacionCRModel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+    
+    public void ChangeVal(LitrosPorSexoView lpSexo)
+    {
+    try
+    {
+        //CreateConnection();
+        Connection conn = connect();
+        Statement stmt = conn.createStatement();
+        //To remove previously added rows
+        String SQL = "SELECT SUM(litros_donados) as p_total" +
+"	FROM public.\"Donante\"\n" +
+"	WHERE sexo = 'femenino';";
+        try (ResultSet rs = stmt.executeQuery(SQL)) {
+            if (rs.next()) {
+            lpSexo.femCant.setText(Float.toString(rs.getFloat(1)));
+            }
+        }
+        SQL = "SELECT SUM(litros_donados) as p_total" +
+"	FROM public.\"Donante\"\n" +
+"	WHERE sexo = 'masculino';";
+        try (ResultSet rs = stmt.executeQuery(SQL)) {
+            if (rs.next()) {
+            lpSexo.mascCant.setText(Float.toString(rs.getFloat(1)));
+            }
+        }
+    }
+    catch(SQLException e)
+    {
+        throw new RuntimeException(e);
+    } 
 }
+    
+    public void BloodTypes(Popup lpTipe)
+    {
+    try
+    {
+        //CreateConnection();
+        Connection conn = connect();
+        Statement stmt = conn.createStatement();
+        //It actualizates it-self every time is executed
+        String SQL = "SELECT SUM(litros_donados) as p_total" +
+"	FROM public.\"Donante\"\n" +
+"	WHERE tipo_sangre = 'A+';";
+        try (ResultSet rs = stmt.executeQuery(SQL)) {
+            if (rs.next()) {
+            lpTipe.Apositivo.setText(Float.toString(rs.getFloat(1)));
+            }
+        }
+        SQL = "SELECT SUM(litros_donados) as p_total" +
+"	FROM public.\"Donante\"\n" +
+"	WHERE tipo_sangre = 'B+';";
+        try (ResultSet rs = stmt.executeQuery(SQL)) {
+            if (rs.next()) {
+            lpTipe.Bpositivo.setText(Float.toString(rs.getFloat(1)));
+            }
+        }
+        SQL = "SELECT SUM(litros_donados) as p_total" +
+"	FROM public.\"Donante\"\n" +
+"	WHERE tipo_sangre = 'AB+';";
+        try (ResultSet rs = stmt.executeQuery(SQL)) {
+            if (rs.next()) {
+            lpTipe.ABpositivo.setText(Float.toString(rs.getFloat(1)));
+            }
+        }
+        SQL = "SELECT SUM(litros_donados) as p_total" +
+"	FROM public.\"Donante\"\n" +
+"	WHERE tipo_sangre = 'O+';";
+        try (ResultSet rs = stmt.executeQuery(SQL)) {
+            if (rs.next()) {
+            lpTipe.Opositivo.setText(Float.toString(rs.getFloat(1)));
+            }
+        }
+        SQL = "SELECT SUM(litros_donados) as p_total" +
+"	FROM public.\"Donante\"\n" +
+"	WHERE tipo_sangre = 'A-';";
+        try (ResultSet rs = stmt.executeQuery(SQL)) {
+            if (rs.next()) {
+            lpTipe.Anegativo.setText(Float.toString(rs.getFloat(1)));
+            }
+        }
+        SQL = "SELECT SUM(litros_donados) as p_total" +
+"	FROM public.\"Donante\"\n" +
+"	WHERE tipo_sangre = 'B-';";
+        try (ResultSet rs = stmt.executeQuery(SQL)) {
+            if (rs.next()) {
+            lpTipe.Bnegativo.setText(Float.toString(rs.getFloat(1)));
+            }
+        }
+        SQL = "SELECT SUM(litros_donados) as p_total" +
+"	FROM public.\"Donante\"\n" +
+"	WHERE tipo_sangre = 'AB-';";
+        try (ResultSet rs = stmt.executeQuery(SQL)) {
+            if (rs.next()) {
+            lpTipe.ABnegativo.setText(Float.toString(rs.getFloat(1)));
+            }
+        }
+        SQL = "SELECT SUM(litros_donados) as p_total" +
+"	FROM public.\"Donante\"\n" +
+"	WHERE tipo_sangre = 'O-';";
+        try (ResultSet rs = stmt.executeQuery(SQL)) {
+            if (rs.next()) {
+            lpTipe.Onegativo.setText(Float.toString(rs.getFloat(1)));
+            }
+        }
+
+    }
+    catch(SQLException e)
+    {
+        throw new RuntimeException(e);
+    } 
+}
+    
+    public void TotalBlood()
+    {
+    try
+    {
+        //CreateConnection();
+        Connection conn = connect();
+        Statement stmt = conn.createStatement();
+        //To remove previously added rows
+        String SQL = "SELECT SUM(litros_donados) as p_total" +
+"	FROM public.\"Donante\"\n";
+        try (ResultSet rs = stmt.executeQuery(SQL)) {
+            if (rs.next()) {
+            String msg = Float.toString(rs.getFloat(1));
+            JOptionPane.showMessageDialog(null, "Cantidad de sangre total: "+msg, "Banco de sangre", 1);
+            }
+        }
+    }
+    catch(SQLException e)
+    {
+        throw new RuntimeException(e);
+    } 
+}
+
+    public void InsertarDonacion(String SQL) {
+            try
+    {
+        //CreateConnection();
+        Connection conn = connect();
+        Statement stmt = conn.createStatement();
+        stmt.execute(SQL);
+    }
+    catch(SQLException e)
+    {
+        throw new RuntimeException(e);
+    } 
+    }
+        
+}
+
+
+
