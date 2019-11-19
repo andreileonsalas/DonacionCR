@@ -6,6 +6,13 @@
 package JavaMVCModels;
 
 import JavaMVCViews.*;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
+import com.mongodb.MongoClient;
+import com.mongodb.MongoClientURI;
+import com.mongodb.client.MongoDatabase;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,12 +20,20 @@ import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.Collections;
+import java.util.Vector;
+import java.util.Comparator;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JTable;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
+
+
+
 
 /**
  *
@@ -140,6 +155,7 @@ public class DonacionCRModel {
             Statement stmt = conn.createStatement();
             stmt.execute(sql);
         } catch (SQLException ex) {
+            JOptionPane.showMessageDialog(null, ex.getMessage());
             Logger.getLogger(DonacionCRModel.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
@@ -291,6 +307,48 @@ public class DonacionCRModel {
         throw new RuntimeException(e);
     } 
     }
+    
+    public void ConnectaraMongoDB (JTable table)
+    {
+        
+        //MongoClientURI uri = new MongoClientURI(
+        //    "mongodb+srv://admin:admin@localhost");
+        //MongoClient mongoClient = new MongoClient(uri);
+        //MongoDatabase database = mongoClient.getDatabase("DonacionCR");
+        
+            // TODO add your handling code here:
+        try {
+            MongoClient mongoClient = new
+            MongoClient( "localhost" , 27017 );
+            DB db = mongoClient.getDB( "DonacionCR" );
+            DBCollection coll = db.getCollection("DonacionCR");
+            DBCursor cursor = coll.find();
+            String[] columnNames = {"num_cedula","nombre","apellido_1","apellido_2"};
+            DefaultTableModel model = new
+            DefaultTableModel(columnNames, 0);
+        while(cursor.hasNext()) {
+            DBObject obj = cursor.next();
+            String num_cedula = (String)obj.get("num_cedula");
+            String nombre = (String)obj.get("nombre");
+            String apellido_1 = (String)obj.get("apellido_1");
+            String apellido_2 = (String)obj.get("apellido_2");
+            model.addRow(new Object[]
+        { num_cedula,nombre,apellido_1,apellido_2});
+        }
+            //TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(table.getModel());
+            //table.setRowSorter(sorter);
+
+            
+            table.setModel(model);
+            TableSorter(table);
+            cursor.close();
+            mongoClient.close();
+        } catch (Exception ex)
+        {}
+        
+    }
+    
+    
         
 }
 

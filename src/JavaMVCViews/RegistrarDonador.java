@@ -82,6 +82,23 @@ public class RegistrarDonador extends javax.swing.JFrame {
 
         jLabel7.setText("Fecha de nacimiento");
 
+        jTextField7.setEnabled(false);
+        jTextField7.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                jTextField7FocusGained(evt);
+            }
+        });
+        jTextField7.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jTextField7MousePressed(evt);
+            }
+        });
+        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField7ActionPerformed(evt);
+            }
+        });
+
         jLabel8.setText("Tipo de sangre");
 
         jLabel9.setText("Provincia");
@@ -218,7 +235,7 @@ public class RegistrarDonador extends javax.swing.JFrame {
                     .addComponent(jLabel11, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton1)
                     .addComponent(jButton2))
                 .addContainerGap(38, Short.MAX_VALUE))
@@ -241,6 +258,21 @@ public class RegistrarDonador extends javax.swing.JFrame {
         // TODO add your handling code here:
         this.controller.volverdesdeDonar();
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField7ActionPerformed
+
+    private void jTextField7FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextField7FocusGained
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_jTextField7FocusGained
+
+    private void jTextField7MousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTextField7MousePressed
+        // TODO add your handling code here:
+        jTextField7.setText(this.controller.InsertarFecha());
+    }//GEN-LAST:event_jTextField7MousePressed
 
     /**
      * @param args the command line arguments

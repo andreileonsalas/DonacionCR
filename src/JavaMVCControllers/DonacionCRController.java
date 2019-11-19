@@ -106,6 +106,17 @@ public class DonacionCRController {
 
     public void RegistrarDonador() {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.registrardonador.jTextField10.setText("");
+        
+        this.registrardonador.jTextField2.setText("");
+        this.registrardonador.jTextField3.setText("");
+        this.registrardonador.jTextField4.setText("");
+        this.registrardonador.jTextField5.setText("");
+        
+        this.registrardonador.jTextField7.setText("");
+        
+        this.registrardonador.jTextField11.setText("");
+        
         this.registrardonador.setVisible(true);
         this.view.setVisible(false);
     }
@@ -367,6 +378,25 @@ public class DonacionCRController {
         this.registrardonador.setVisible(false);
         this.view.setVisible(true);
     }
+
+    public String InsertarFecha() {
+        String query;
+        String fecha;
+        JDateChooser jd = new JDateChooser();
+        String message ="Choose start date:\n";
+        Object[] params = {message,jd};
+        JOptionPane.showConfirmDialog(null,params,"Start date", JOptionPane.PLAIN_MESSAGE);
+        String s="";
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+        s=sdf.format(((JDateChooser)params[1]).getDate());//Casting params[1] makes me able to get its information
+        return s;
+    }
     
+    public void ListaDonadoresAlfabeticoMongo() {
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        this.model.ConnectaraMongoDB(this.mostrarqueries.jTable1); //Recibe un jtable, y lo rellena con el query que uno quiera
+        this.mostrarqueries.setVisible(true);
+        this.view.setVisible(false);
+    }
     
 }
