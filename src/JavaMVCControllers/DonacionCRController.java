@@ -10,6 +10,7 @@ import JavaMVCViews.*;
 import JavaMVCModels.*;
 import com.toedter.calendar.JDateChooser;
 import java.awt.HeadlessException;
+import static java.lang.Double.parseDouble;
 import static java.lang.Integer.parseInt;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -111,18 +112,18 @@ public class DonacionCRController {
 
     public void InsertarDonacion() {
         Long cedula = null;
-        int donacion = 0;
+        double donacion = 0;
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/DD/yyyy");  
         LocalDateTime now = LocalDateTime.now(); 
         try {
             cedula = Long.parseLong(JOptionPane.showInputDialog(null, "Digite el numero de cedula: "));
         } catch (HeadlessException headlessException) {
         } catch (NumberFormatException numberFormatException) {
-            JOptionPane.showMessageDialog(null, "No digito un numero");
+            JOptionPane.showMessageDialog(null, "No digito un numero de cedula");
             return;
         }
         try {
-            donacion = parseInt(JOptionPane.showInputDialog(null, "Digite los litros a donar: "));
+            donacion = parseDouble(JOptionPane.showInputDialog(null, "Digite los litros a donar: "));
         } catch (HeadlessException headlessException) {
         } catch (NumberFormatException numberFormatException) {
             JOptionPane.showMessageDialog(null, "No digito un numero");
@@ -186,6 +187,7 @@ public class DonacionCRController {
         this.model.FillTable(mostrarqueries.jTable1, query);
         this.view.setVisible(false);
         this.mostrarqueries.setVisible(true);
+        this.mostrarqueries.jButton2.setVisible(true);
                
     }
 
@@ -212,7 +214,7 @@ public class DonacionCRController {
 "       )\n" +
 "	AS promedio\n" +
 "	FROM public.\"Registro_Donacion\" a\n" +
-"	INNER JOIN public.\"Donante\" b ON a.num_donacion = b.num_cedula\n" +
+"	INNER JOIN public.\"Donante\" b ON a.cedula_donante = b.num_cedula\n" +
 "	WHERE num_cedula = "+ cedula +"\n" +
 "	;";
         
@@ -281,6 +283,7 @@ public class DonacionCRController {
         //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
         this.view.setVisible(true);
         this.mostrarqueries.setVisible(false);
+        this.mostrarqueries.jButton2.setVisible(false);
     }
     
     public void volverLpT() {
@@ -343,6 +346,26 @@ public class DonacionCRController {
     public void volverdeenfermedades() {
         this.mostrarenfermedades.setVisible(false);
         this.mostrarqueries.setVisible(true);
+    }
+
+    public void ListarMedicamentos() {
+        
+        this.SQL ="SELECT \"Codigo\", \"Nombre\", \"Descripcion\"\n" +
+"	FROM public.\"Medicamento\";";
+        
+        try {
+            this.model.FillTable(this.mostrarqueries.jTable1, this.SQL);
+            
+            this.mostrarqueries.setVisible(true);
+            this.view.setVisible(false);
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+    }
+
+    public void volverdesdeDonar() {
+        this.registrardonador.setVisible(false);
+        this.view.setVisible(true);
     }
     
     
