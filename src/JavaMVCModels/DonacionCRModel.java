@@ -319,7 +319,7 @@ public class DonacionCRModel {
             // TODO add your handling code here:
         try {
             MongoClient mongoClient = new
-            MongoClient( "localhost" , 27017 );
+            MongoClient( Constants.mongourl , 27017 );
             DB db = mongoClient.getDB( "DonacionCR" );
             DBCollection coll = db.getCollection("DonacionCR");
             DBCursor cursor = coll.find();
