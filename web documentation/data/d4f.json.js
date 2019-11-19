@@ -1,0 +1,1 @@
+window.repositoryObject = {"title_prefix":null,"custom_fields":[],"functions":[{"id":"f132","name":"public.fn_actlitros","type":"FUNCTION","subtype":"FUNCTION","is_user_defined":false,"custom_fields":{"Status":{"value":null,"type":"LIST_CLOSED"}}}],"object_id":"d4f"};
