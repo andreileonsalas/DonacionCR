@@ -340,7 +340,7 @@ public class DonacionCRModel {
 
             
             table.setModel(model);
-            TableSorter(table);
+            
             cursor.close();
             mongoClient.close();
         } catch (Exception ex)
